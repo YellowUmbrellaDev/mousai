@@ -1,0 +1,44 @@
+---
+const {name, example, price, description, id} = Astro.props;
+import { Image } from 'astro:assets';
+---
+<div class="card lg:card-side bg-base-100 shadow-xl">
+  <a onclick=`${id}.showModal()`>
+    <figure>
+      <Image 
+        src={example} 
+        alt={name} 
+        width={100}
+        height={100}
+        class={"w-72"}    
+      />
+    </figure>
+  </a>
+  <div class="card-body">
+    <h2 class="card-title">{name}</h2>
+    <p>{description}</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary">Comission Now for {price}€</button>
+    </div>
+  </div>
+  <dialog id={id} class="modal">
+    <div class="modal-box">
+      <div class="flex justify-center">
+        <Image 
+          src={example} 
+          alt={name} 
+          width={100}
+          height={100}
+          class={"w-full m-10"}
+        />
+      </div>
+      <div class="flex justify-center">
+        <form method="dialog">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+    </div>
+  </dialog>
+</div>

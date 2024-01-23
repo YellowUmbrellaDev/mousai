@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SocialCards from "../components/socialCards.astro";
+const getSocialData = await fetch(`${import.meta.env.PUBLIC_URL}/api/socials.json`);
+const socialData = await getSocialData.json();
+console.log(socialData);
+---
+<Layout title="Socials">
+    {
+        socialData.socials.map((output: any) => (
+        <SocialCards
+            image={output.icon}
+            name={output.name}
+            link={output.link}
+        />
+        ))
+    }
+</Layout>

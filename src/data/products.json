@@ -1,0 +1,33 @@
+{
+    "products": [
+       {
+         "id": "sketch",
+         "name": "Sketch",
+         "example": "/example1.jpg",
+         "price": "10",
+         "description": "A simple sketch of your character. No color, no shading."
+       },
+       {
+         "id": "lineart",
+         "name": "Lineart",
+         "example": "/example2.jpg",
+         "price": "10",
+         "description": "A simple lineart of your character. No color, no shading."
+       },
+       {
+         "id": "flatcolor",
+         "name": "Flat color",
+         "example": "/example3.jpg",
+         "price": "10",
+         "description": "A simple flat color of your character. No shading."
+      },
+      {
+         "id": "fullcolor",
+         "name": "Full color",
+         "example": "/example4.jpg",
+         "price": "10",
+         "description": "A full color of your character. With shading."
+      }
+    ]
+ }
+ 
