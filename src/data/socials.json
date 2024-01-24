@@ -1,19 +1,19 @@
 {
     "socials": [
-       {
-          "name": "Twitter",
-          "icon": "/twitter.png",
-          "link": "https://twitter.com/YUmbrellaDev"
-       },
-       {
-          "name": "Github",
-          "icon": "/github.png",
-          "link": "https://github.com/YellowUmbrellaDev"
-       },
-       {
+      {
          "name": "Twitter",
          "icon": "/twitter.png",
          "link": "https://twitter.com/YUmbrellaDev"
+      },
+      {
+         "name": "Github",
+         "icon": "/github.png",
+         "link": "https://github.com/YellowUmbrellaDev"
+      },
+      {
+        "name": "Twitter",
+        "icon": "/twitter.png",
+        "link": "https://twitter.com/YUmbrellaDev"
       },
       {
          "name": "Github",

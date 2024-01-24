@@ -27,7 +27,21 @@
          "example": "/example4.jpg",
          "price": "10",
          "description": "A full color of your character. With shading."
-      }
+      },
+      {
+        "id": "sketch",
+        "name": "Sketch",
+        "example": "/example1.jpg",
+        "price": "10",
+        "description": "A simple sketch of your character. No color, no shading."
+      },
+      {
+        "id": "lineart",
+        "name": "Lineart",
+        "example": "/example2.jpg",
+        "price": "10",
+        "description": "A simple lineart of your character. No color, no shading."
+      }   
     ]
  }
  
