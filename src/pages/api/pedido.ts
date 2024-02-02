@@ -39,21 +39,21 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     // Comprobar si el usuario existe en la tabla Usuarios
     const { rows } = await client.execute({
-      sql: "SELECT * FROM Usuarios WHERE email = ? AND nombre_de_usuario = ?", 
-      args: [email, username]
+      sql: "SELECT * FROM users WHERE email = ?", 
+      args: [email]
     });
 
     // Si el usuario no existe, lo insertamos
     if (rows.length === 0) {
       await client.execute({
-        sql: "INSERT INTO Usuarios (email, nombre_de_usuario) VALUES (?, ?)", 
+        sql: "INSERT INTO users (email, username) VALUES (?, ?)", 
         args: [email, username]
       });
     }
 
     // Ahora que el usuario existe, podemos insertar el pedido
     await client.execute({
-      sql: "INSERT INTO Pedidos (email, Nombre, pronombres, descripción, tier) VALUES (?, ?, ?, ?, ?)",
+      sql: "INSERT INTO commissions (email, name, pronouns, description, tier) VALUES (?, ?, ?, ?, ?)",
       args:[email, name, pronouns, description, tier]
     });
     const boardId = import.meta.env.DECK_TABLE_ID;
