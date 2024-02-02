@@ -1,0 +1,22 @@
+---
+import { getSession } from 'auth-astro/server';
+import Layout from '../../layouts/Layout.astro';
+const session = await getSession(Astro.request)
+const {username} = Astro.params
+if (!session || session?.user?.name !== username) {
+    return Astro.redirect('/')
+}
+---
+
+<Layout title={session?.user?.name}>
+    <div class="flex flex-col items-center justify-center">
+        <img src={session?.user?.image} class="rounded-full w-32 h-32" alt="profile picture" />
+        <h1 class="text-5xl">Hello {session?.user?.name}</h1>
+        <p class="text-2xl">Welcome to your profile page</p>
+    </div>
+    <div class="flex flex-col items-center justify-center">
+        <h2 class="text-3xl mt-10">Pedidos</h2>
+    </div>  
+</Layout>
+
+

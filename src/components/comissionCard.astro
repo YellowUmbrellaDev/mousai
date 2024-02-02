@@ -1,6 +1,9 @@
 ---
+import { getSession } from 'auth-astro/server';
+const session = await getSession(Astro.request)
 const {name, example, price, description, id} = Astro.props;
 import { Image } from 'astro:assets';
+const baseURL = import.meta.env.BASE_URL;
 ---
 <div class="card lg:card-side bg-base-100 shadow-xl">
   <a onclick=`${id}.showModal()`>
@@ -17,9 +20,18 @@ import { Image } from 'astro:assets';
   <div class="card-body">
     <h2 class="card-title">{name}</h2>
     <p>{description}</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Comission Now for {price}€</button>
-    </div>
+    {
+      session ? (
+      <div class="card-actions justify-end">
+        <a href=`${baseURL}pedidos/${id}`><button class="btn btn-primary">Comission Now for {price}€</button></a>
+      </div>
+      ) : (
+        <div class="card-actions justify-end">
+          <button id="login" class="btn btn-primary">Login for be able to buy</button>
+        </div>
+      )
+    }
+
   </div>
   <dialog id={id} class="modal">
     <div class="modal-box">

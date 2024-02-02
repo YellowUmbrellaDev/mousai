@@ -1,8 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import 'photoswipe/style.css';
-const getProductData = await fetch(`${import.meta.env.PUBLIC_URL}/api/products.json`);
-import sharp from 'sharp';
+const getProductData = await fetch(`http://${Astro.url.host}/api/products.json`);
 const productData = await getProductData.json();
 
 ---
@@ -16,7 +15,7 @@ const productData = await getProductData.json();
             data-pswp-width="1875" 
             data-pswp-height="2500" 
             target="_blank"
-            class="rounded-xl shadow-xl shadow-sky-300/10 hover:shadow-2xl hover:shadow-sky-300/75 transition-all overflow-hidden hover:scale-110"
+            class="rounded-xl shadow-xl shadow-sky-300/10 hover:shadow-2xl hover:shadow-sky-300/75 transition-all overflow-hidden hover:scale-110 m-5" 
         >
             <img src={product.example} class="w-full h-full">
         </a>
@@ -24,8 +23,6 @@ const productData = await getProductData.json();
     ))}
 </div>
 <script>
-    import PhotoSwipeLightbox from 'photoswipe/lightbox';
-    import 'photoswipe/style.css';
 
     const lightbox = new PhotoSwipeLightbox({
       gallery: '#gallery',
@@ -33,6 +30,7 @@ const productData = await getProductData.json();
       pswpModule: () => import('photoswipe')
     });
     lightbox.init();
+    
 </script>
 
 </Layout>

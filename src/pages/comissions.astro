@@ -1,8 +1,9 @@
 ---
+import { getSession } from 'auth-astro/server';
+const session = await getSession(Astro.request)
 import Layout from '../layouts/Layout.astro';
-import ComissionCard from '../components/comissionCard.astro';
-import { Image } from 'astro:assets';
-const getProductData = await fetch(`${import.meta.env.PUBLIC_URL}/api/products.json`);
+import ComissionCard from '../components/ComissionCard.astro';
+const getProductData = await fetch(`http://${Astro.url.host}/api/products.json`);
 const productData = await getProductData.json();
 
 ---

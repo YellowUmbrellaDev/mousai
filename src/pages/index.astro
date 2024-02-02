@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import SocialCards from '../components/socialCards.astro';
-const getSocialData = await fetch(`${import.meta.env.PUBLIC_URL}/api/socials.json`);
+import SocialCards from '../components/SocialCards.astro';
+const getSocialData = await fetch(`http://${Astro.url.host}/api/socials.json`);
 const socialData = await getSocialData.json();
 ---
 
