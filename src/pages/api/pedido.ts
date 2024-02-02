@@ -2,8 +2,6 @@ import type { APIRoute} from 'astro';
 import { createClient } from "@libsql/client";
 import { getSession } from 'auth-astro/server';
 
-
-
 interface FormData {
   name: string;
   pronouns: string;
@@ -11,6 +9,11 @@ interface FormData {
   description: string;
   tier: string;
   username: string;
+}
+
+// Función para generar un string aleatorio
+function generateRandomId() {
+  return Math.random().toString(36).substring(2, 12);
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -28,7 +31,7 @@ export const POST: APIRoute = async ({ request }) => {
   const pronouns = body.pronouns;
   const email = body.email;
   const description = body.description;
-  const tier = body.tier; // Cambiado de body.id a body.tier
+  const tier = body.tier;
   const username = body.username;
 
   // Verificar si los valores son null
@@ -51,18 +54,31 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    // Generar un id único para la comisión
+    let id;
+    let idExists;
+    do {
+      id = generateRandomId();
+      const { rows } = await client.execute({
+        sql: "SELECT * FROM commissions WHERE id = ?", 
+        args: [id]
+      });
+      idExists = rows.length > 0;
+    } while (idExists);
+
     // Ahora que el usuario existe, podemos insertar el pedido
     await client.execute({
-      sql: "INSERT INTO commissions (email, name, pronouns, description, tier) VALUES (?, ?, ?, ?, ?)",
-      args:[email, name, pronouns, description, tier]
+      sql: "INSERT INTO commissions (id, email, name, pronouns, description, tier) VALUES (?, ?, ?, ?, ?, ?)",
+      args:[id, email, name, pronouns, description, tier]
     });
+
     const boardId = import.meta.env.DECK_TABLE_ID;
     const stackId = import.meta.env.DECK_STACK_ID;
     const data = {
       title: `[${tier}] ${name}`,
       type:'plain',
       order:999,
-      description: `Commision from ${name} (${email})\n\nPronouns: ${pronouns}\n\nDescription: ${description}\n\nTier: ${tier}\n\nUsername: ${username}`
+      description: `Commision from ${name} (${email})\n\nPronouns: ${pronouns}\n\nDescription: ${description}\n\nTier: ${tier}\n\nUsername: ${username}\n\n ID de la comisión: ${id}`
     };
     const response = await fetch(`https://cloud.nereacassian.com/apps/deck/api/v1.0/boards/${boardId}/stacks/${stackId}/cards`, {
       method: 'POST',
