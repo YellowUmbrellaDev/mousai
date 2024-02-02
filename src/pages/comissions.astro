@@ -12,7 +12,7 @@ const productData = await getProductData.json();
         <h1 class="text-3xl text-secondary m-5">Comissions</h1>
     </div>
     <div class="flex justify-center m-10">
-        <div class="grid gap-5 grid-cols-2">
+        <div class="grid gap-5 grid-cols-1 xl:grid-cols-2">
             {productData.products.map((product: any) => (
                 <ComissionCard
                     name={product.name}
