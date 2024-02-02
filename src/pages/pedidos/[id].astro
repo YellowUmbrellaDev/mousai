@@ -11,6 +11,6 @@ if (!session) {
 <Layout title={id}>
   <div class="flex flex-col items-center justify-center">
     <h1 class="text-3xl font-bold my-5">Crear comisión</h1>
-    <SendForm mail={session.user?.email} client:load/>
+    <SendForm mail={session.user?.email} tipo={Astro.params} client:load/>
   </div>
 </Layout>

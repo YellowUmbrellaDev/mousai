@@ -2,9 +2,9 @@ import { getSession } from 'auth-astro/server';
 import { useState, useEffect } from 'react';
 
 export default function SendForm(mail) {
-    console.log(mail);
     const [name, setName] = useState("");
     const email = mail.mail;
+    const id = mail.tipo.id;
     const [description, setDescription] = useState("");
     const [pronouns, setPronouns] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
@@ -26,7 +26,8 @@ export default function SendForm(mail) {
             name,
             email,
             description,
-            pronouns
+            pronouns,
+            id
         };
         try {
             const response = await fetch('/api/pedido', {
