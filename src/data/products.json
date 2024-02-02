@@ -19,7 +19,7 @@
          "name": "Flat color",
          "example": "/flat-color.png",
          "price": "10",
-         "description": "A simple flat color of your character. No shading."
+         "description": "A flat color of your character. No shading."
       },
       {
          "id": "fullcolor",
