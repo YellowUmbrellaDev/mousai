@@ -1,5 +1,5 @@
 import type { APIRoute} from 'astro';
-import { createClient } from "@libsql/client/http";
+import { createClient } from "@libsql/client/web";
 import { getSession } from 'auth-astro/server';
 
 
