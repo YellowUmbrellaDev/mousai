@@ -1,7 +1,8 @@
 import type { APIRoute} from 'astro';
 import { createClient } from "@libsql/client";
 import { getSession } from 'auth-astro/server';
-
+import NextCloudCard from '../../components/services/NextCloudCard.ts';
+import TrelloCard from '../../components/services/TrelloCard.ts';
 interface FormData {
   name: string;
   pronouns: string;
@@ -72,30 +73,22 @@ export const POST: APIRoute = async ({ request }) => {
       args:[id, email, name, pronouns, description, tier]
     });
 
-    const boardId = import.meta.env.DECK_TABLE_ID;
-    const stackId = import.meta.env.DECK_STACK_ID;
-    const data = {
-      title: `[${tier}] ${name}`,
-      type:'plain',
-      order:999,
-      description: `Commision from ${name} (${email})\n\nPronouns: ${pronouns}\n\nDescription: ${description}\n\nTier: ${tier}\n\nUsername: ${username}\n\n ID de la comisión: ${id}`
-    };
-    const response = await fetch(`https://cloud.nereacassian.com/apps/deck/api/v1.0/boards/${boardId}/stacks/${stackId}/cards`, {
-      method: 'POST',
-      headers: {
-        "Accept": "*/*",
-        "Authorization": 'Basic ' + btoa(import.meta.env.DECK_USER + ':' + import.meta.env.DECK_PASSWORD),
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-
-    // Comprueba si la respuesta de la solicitud fetch fue exitosa
-    if (!response.ok) {
-      throw new Error(`Fetch request failed with status ${response.status}`);
+    let serviceResponse;
+    if (import.meta.env.TRAKING_SERVICE === 'nextcloud') {
+      serviceResponse = await NextCloudCard(tier, name, email, pronouns, description, username, id);
+    } else if (import.meta.env.TRAKING_SERVICE === 'trello') {
+      serviceResponse = await TrelloCard(tier, name, email, pronouns, description, username, id);
+    } else {
+      console.error('Invalid tracking service:', import.meta.env.TRAKING_SERVICE);
+      return new Response(null, {status: 500});
     }
 
-    return new Response(null, {status: 200});
+    if ((serviceResponse as { status: number } | undefined)?.status === 200) {
+      return new Response(null, {status: 200});
+    } else {
+      console.error('Error from tracking service:', (serviceResponse as { status: number } | undefined)?.status);
+      return new Response(null, {status: 500});
+    }
   } catch (error) {
     console.error(error);
     return new Response(null, {status: 400});
