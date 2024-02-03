@@ -6,6 +6,7 @@ try {
 	const getSocialData = await fetch(`https://${Astro.url.host}/api/socials.json`);
 	const socialData = await getSocialData.json();
 } catch (error) {
+	console.log(`https://${Astro.url.host}/api/socials.json`)
 	console.error(error);
 }
 ---
