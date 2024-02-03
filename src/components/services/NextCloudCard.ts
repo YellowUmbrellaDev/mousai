@@ -24,9 +24,11 @@ export default async function NextCloudCard(tier: string, name: string, email: s
         throw new Error(`Fetch request failed with status ${response.status}`);
       }
       
-      return { status: 200 };;
+      const responseData = await response.json();
+      const cardId = responseData.id;
+      
+      return { status: 200, cardId };
     } catch (error) {
-      console.error(error);
-      throw error;
+      return  { status: 500, error };
     }
 }

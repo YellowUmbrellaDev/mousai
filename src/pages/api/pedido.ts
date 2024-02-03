@@ -10,7 +10,13 @@ interface FormData {
   description: string;
   tier: string;
   username: string;
+  file: BinaryData;
 }
+
+const client = createClient({
+  url: import.meta.env.TURSO_URL,
+  authToken: import.meta.env.TURSO_SECRET,
+});
 
 // Función para generar un string aleatorio
 function generateRandomId() {
@@ -22,18 +28,15 @@ export const POST: APIRoute = async ({ request }) => {
   if (!session) {
     return new Response(null, {status: 401});
   }
-  const client = createClient({
-    url: import.meta.env.TURSO_URL,
-    authToken: import.meta.env.TURSO_SECRET,
-  });
 
-  const body = await request.json();
-  const name = body.name;
-  const pronouns = body.pronouns;
-  const email = body.email;
-  const description = body.description;
-  const tier = body.tier;
-  const username = body.username;
+  const formData = await request.formData();
+  const name = formData.get('name') as string;
+  const pronouns = formData.get('pronouns') as string;
+  const email = formData.get('email') as string;
+  const description = formData.get('description') as string;
+  const tier = formData.get('tier') as string;
+  const username = formData.get('username') as string;
+  const file = formData.get('file') as FormDataEntryValue;
 
   // Verificar si los valores son null
   if (!name || !pronouns || !email || !description || !tier || !username) {
@@ -66,29 +69,29 @@ export const POST: APIRoute = async ({ request }) => {
       });
       idExists = rows.length > 0;
     } while (idExists);
-
-    // Ahora que el usuario existe, podemos insertar el pedido
-    await client.execute({
-      sql: "INSERT INTO commissions (id, email, name, pronouns, description, tier) VALUES (?, ?, ?, ?, ?, ?)",
-      args:[id, email, name, pronouns, description, tier]
-    });
-
+    
     let serviceResponse;
     if (import.meta.env.TRAKING_SERVICE === 'nextcloud') {
       serviceResponse = await NextCloudCard(tier, name, email, pronouns, description, username, id);
     } else if (import.meta.env.TRAKING_SERVICE === 'trello') {
-      serviceResponse = await TrelloCard(tier, name, email, pronouns, description, username, id);
+      serviceResponse = await TrelloCard(tier, name, email, pronouns, description, username, id, file);
     } else {
       console.error('Invalid tracking service:', import.meta.env.TRAKING_SERVICE);
       return new Response(null, {status: 500});
     }
 
-    if ((serviceResponse as { status: number } | undefined)?.status === 200) {
-      return new Response(null, {status: 200});
+    if (serviceResponse.status === 200) {
+      const cardId = serviceResponse.cardId;
+      await client.execute({
+        sql: "INSERT INTO commissions (id, email, name, pronouns, description, tier, cardId) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        args:[id, email, name, pronouns, description, tier, cardId]
+      });
     } else {
-      console.error('Error from tracking service:', (serviceResponse as { status: number } | undefined)?.status);
+      console.error('Error:', serviceResponse.error);
       return new Response(null, {status: 500});
     }
+
+    return new Response(null, {status: 200});
   } catch (error) {
     console.error(error);
     return new Response(null, {status: 400});
