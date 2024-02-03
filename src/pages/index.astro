@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import SocialCards from '../components/SocialCards.astro';
-// const getSocialData = await fetch(`${Astro.url}/api/socials.json`);
-// const socialData = await getSocialData.json();
+const getSocialData = await fetch(`https://${Astro.url.host}/api/socials.json`);
+const socialData = await getSocialData.json();
 ---
 
 <Layout title="Mousai">
