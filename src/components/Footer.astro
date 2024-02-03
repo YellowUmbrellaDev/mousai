@@ -1,5 +1,5 @@
 ---
-const getSocialData = await fetch(`${Astro.url}/api/socials.json`);
+const getSocialData = await fetch(`${Astro.url.origin}/api/socials.json`);
 const socialData = await getSocialData.json();
 ---
 
