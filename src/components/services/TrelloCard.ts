@@ -19,7 +19,9 @@ export default async function TrelloCard(tier: string, name: string, email: stri
                 "start": new Date().toISOString().split('T')[0]
             })
         });
+
         const responseData = await response.json();
+        console.log(responseData);
         const cardId = responseData.id;
         
         if (file !== null) {
