@@ -1,5 +1,4 @@
 export default async function TrelloCard(tier: string, name: string, email: string, pronouns: string, description: string, username: string, id: string, file: FormDataEntryValue) {
-    console.log(file);
     const listId = import.meta.env.TRELLO_LIST_ID;
     const key = import.meta.env.TRELLO_API_KEY;
     const token = import.meta.env.TRELLO_TOKEN;
@@ -30,7 +29,6 @@ export default async function TrelloCard(tier: string, name: string, email: stri
                 method: 'POST',
                 headers: {
                     "Accept": "*/*",
-                    "Content-Type": "application/octet-stream"
                 },
                 body: formData
             });

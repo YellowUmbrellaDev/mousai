@@ -41,3 +41,4 @@ Mousai is a app that allows artist to have a place online where sell commissions
     - [ ] Webhook to update the status of the tasks
   - [x] Integrate with Nextcloud (Limited)
     - [x] Api enpoint to upload files
+    - [x] Apo endpoint for creating task
