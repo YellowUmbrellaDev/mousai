@@ -1,4 +1,4 @@
-export default async function TrelloCard(tier: string, name: string, email: string, pronouns: string, description: string, username: string, id: string, file: FormDataEntryValue) {
+export default async function TrelloCard(tier: string, name: string, email: string, pronouns: string, description: string, username: string, id: string, files: FormDataEntryValue[]) {
     const listId = import.meta.env.TRELLO_LIST_ID;
     const key = import.meta.env.TRELLO_API_KEY;
     const token = import.meta.env.TRELLO_TOKEN;
@@ -22,20 +22,23 @@ export default async function TrelloCard(tier: string, name: string, email: stri
 
         const responseData = await response.json();
         const cardId = responseData.id;
+        //console.log(files)
         
-        if (file !== null) {
-            let formData = new FormData();
-            formData.append('file', file);
-            const responseAttachment = await fetch(`https://api.trello.com/1/cards/${cardId}/attachments?key=${key}&token=${token}`, {
-                method: 'POST',
-                headers: {
-                    "Accept": "*/*",
-                },
-                body: formData
-            });
-            if (!responseAttachment.ok) {
-                const errorText = await responseAttachment.text();
-                throw new Error(errorText);
+        if (files !== null) {
+            for (const file of files) {
+                let formData = new FormData();
+                formData.append('file', file);
+                const responseAttachment = await fetch(`https://api.trello.com/1/cards/${cardId}/attachments?key=${key}&token=${token}`, {
+                    method: 'POST',
+                    headers: {
+                        "Accept": "*/*",
+                    },
+                    body: formData
+                });
+                if (!responseAttachment.ok) {
+                    const errorText = await responseAttachment.json();
+                    throw new Error(errorText);
+                }
             }
         }
 

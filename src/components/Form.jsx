@@ -8,7 +8,7 @@ export default function SendForm(mail) {
     const username = mail.username;
     const [description, setDescription] = useState("");
     const [pronouns, setPronouns] = useState("");
-    const [file, setFile] = useState(null);
+    const [files, setFile] = useState(null);
     const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
@@ -31,7 +31,9 @@ export default function SendForm(mail) {
         formData.append('pronouns', pronouns);
         formData.append('tier', tier);
         formData.append('username', username);
-        formData.append('file', file);
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
 
         try {
             const response = await fetch('/api/pedido', {
@@ -59,7 +61,7 @@ export default function SendForm(mail) {
                 <input type="text" name="name" placeholder="Nombre" required className="input input-bordered w-full max-w-xs" value={name} onChange={(e) => setName(e.target.value)} />
                 <input type="text" name="pronouns" placeholder="Pronombres" required className="input input-bordered w-full max-w-xs mt-5" value={pronouns} onChange={(e) => setPronouns(e.target.value)} />
                 <textarea className="textarea textarea-bordered w-80 mt-5" name="description" placeholder="Descripción de la comisión" required value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-                <input multiple type="file" name="file" className="mt-10 file-input file-input-bordered file-input-primary w-full max-w-xs" onChange={(e) => setFile(e.target.files[0])} />
+                <input multiple type="file" name="files" className="mt-10 file-input file-input-bordered file-input-primary w-full max-w-xs" onChange={(e) => setFile(e.target.files)} />
                 <button type="submit" className="btn btn-primary mt-5">Enviar</button>
             </form>
             {isSuccess && (
