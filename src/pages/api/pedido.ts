@@ -37,7 +37,6 @@ export const POST: APIRoute = async ({ request }) => {
   const tier = formData.get('tier') as string;
   const username = formData.get('username') as string;
   const file = formData.getAll('file');
-  console.log(file)
 
   // Verificar si los valores son null
   if (!name || !pronouns || !email || !description || !tier || !username) {
