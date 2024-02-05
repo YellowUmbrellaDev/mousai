@@ -3,7 +3,7 @@ import { getSession } from 'auth-astro/server';
 const session = await getSession(Astro.request)
 import Layout from '../layouts/Layout.astro';
 import ComissionCard from '../components/ComissionCard.astro';
-const getProductData = await fetch(`${Astro.url.origin}/api/products.json`);
+const getProductData = await fetch(`${Astro.url.origin}/api/info/products.json`);
 const productData = await getProductData.json();
 ---
 <Layout title='Comissions'>

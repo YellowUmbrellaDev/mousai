@@ -1,17 +1,9 @@
 import type { APIRoute} from 'astro';
 import { createClient } from "@libsql/client";
 import { getSession } from 'auth-astro/server';
-import NextCloudCard from '../../components/services/NextCloudCard.ts';
-import TrelloCard from '../../components/services/TrelloCard.ts';
-interface FormData {
-  name: string;
-  pronouns: string;
-  email: string;
-  description: string;
-  tier: string;
-  username: string;
-  file: BinaryData;
-}
+import NextCloudCard from '../../../components/services/NextCloudCard.ts';
+import TrelloCard from '../../../components/services/TrelloCard.ts';
+
 
 const client = createClient({
   url: import.meta.env.TURSO_URL,
@@ -28,7 +20,6 @@ export const POST: APIRoute = async ({ request }) => {
   if (!session) {
     return new Response(null, {status: 401});
   }
-
   const formData = await request.formData();
   const name = formData.get('name') as string;
   const pronouns = formData.get('pronouns') as string;

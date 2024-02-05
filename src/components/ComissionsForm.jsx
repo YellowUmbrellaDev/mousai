@@ -43,8 +43,10 @@ export default function SendForm(mail) {
         formData.append('pronouns', pronouns);
         formData.append('tier', tier);
         formData.append('username', username);
-        for (let i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+        if (files) {
+            for (let i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
         }
 
         try {
@@ -53,13 +55,14 @@ export default function SendForm(mail) {
             // Check file size before sending
             const fileSizeLimit = 10 * 1024 * 1024; // 10MB
             let isFileSizeValid = true;
-            for (let i = 0; i < files.length; i++) {
-                if (files[i].size > fileSizeLimit) {
-                    isFileSizeValid = false;
-                    break;
+            if (files) {
+                for (let i = 0; i < files.length; i++) {
+                    if (files[i].size > fileSizeLimit) {
+                        isFileSizeValid = false;
+                        break;
+                    }
                 }
             }
-
 
             if (!isFileSizeValid) {
                 setFileSizeError(true);
@@ -67,7 +70,7 @@ export default function SendForm(mail) {
                 return;
             }
 
-            const response = await fetch('/api/pedido', {
+            const response = await fetch('/api/commissions/create', {
                 method: 'POST',
                 body: formData
             });
