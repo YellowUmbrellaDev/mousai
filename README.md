@@ -14,7 +14,7 @@ Mousai is a app that allows artist to have a place online where sell commissions
 ## Features
 
 - [x] User authentication
-- [x] User profile
+- [ ] User profile
   - [ ] Ability to see requested commisons and their status
 - [x] Artist profile
   - [ ] Ability to upload profile picture
@@ -22,6 +22,7 @@ Mousai is a app that allows artist to have a place online where sell commissions
   - [ ] Ability to customize webpage theme
   - [ ] Ability to set commision tiers they prices and variations and the examples
 - [ ] Commission request with fixed prices that may vary depending on the complexity of the request
+  - [ ] Support for price variations
   - [ ] Ability to send a form with Name, Email, Description, and a file
     - [x] Form for sending the text data 
     - [ ] Integrate with [VercelBloB](https://vercel.com/storage/blob)
@@ -41,3 +42,4 @@ Mousai is a app that allows artist to have a place online where sell commissions
     - [ ] Webhook to update the status of the tasks
   - [x] Integrate with Nextcloud (Limited)
     - [x] Api enpoint to upload files
+    - [x] Apo endpoint for creating task

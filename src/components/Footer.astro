@@ -1,7 +1,6 @@
 ---
-const getSocialData = await fetch(`http://${Astro.url.host}/api/socials.json`);
+const getSocialData = await fetch(`${Astro.url.origin}/api/info/socials.json`);
 const socialData = await getSocialData.json();
-
 ---
 
 <footer class="footer items-center p-4 bg-accent text-accent-content mt-36">

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import 'photoswipe/dist/photoswipe.css';
-const getProductData = await fetch(`/api/products.json`);
+const getProductData = await fetch(`/api/info/products.json`);
 const productData = await getProductData.json();
 
 export default function GalleryCard() {

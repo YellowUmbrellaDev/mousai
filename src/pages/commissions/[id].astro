@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import SendForm from '../../components/Form.jsx'
+import SendForm from '../../components/ComissionsForm.jsx'
 import { getSession } from 'auth-astro/server';
 const session = await getSession(Astro.request)
 const {id} = Astro.params
@@ -13,4 +13,4 @@ if (!session) {
     <h1 class="text-3xl font-bold my-5">Crear comisión</h1>
     <SendForm mail={session.user?.email} tipo={Astro.params} username={session.user?.name} client:load/>
   </div>
-</Layout>
+</Layout>../../components/ComissionsForm.jsx
