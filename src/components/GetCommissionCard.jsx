@@ -20,7 +20,7 @@ const GetCommissionCard = () => {
                         <div className="card-actions justify-end">
                             <div className="badge badge-accent">{new Date(commission.date).toLocaleDateString('en-GB')}</div>
                             {commission.price !== null && (
-                                <div className="badge badge-accent">{commission.price}</div>
+                                <div className="badge badge-accent">{commission.price}€</div>
                             )}
                             <div className="badge badge-accent">{commission.status}</div>
                         </div>
